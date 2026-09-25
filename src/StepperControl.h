@@ -7,15 +7,22 @@
 
 class StepperControl{
     public:
-        begin();
-        home();
-        move(float x, float y, float z); //in mm. Blocking
+        void begin();
+        void home();
+        void move(float x, float y, float z); //in mm. Blocking
 
-        printAll(); //for debugging
+        void printAll(); //for debugging
     private:
-        AccelStepper stepperX(AccelStepper::DRIVER, 33, 12);
-        AccelStepper stepperY(AccelStepper::DRIVER, 32, 14);
-        AccelStepper stepperZ(AccelStepper::DRIVER, 25, 27);
+        const uint8_t xAxisStep = 33;
+        const uint8_t xAxisDir = 12;
+        const uint8_t yAxisStep = 32;
+        const uint8_t yAxisDir = 14;
+        const uint8_t zAxisStep = 25;
+        const uint8_t zAxisDir = 27;
+
+        AccelStepper stepperX{AccelStepper::DRIVER, xAxisStep, xAxisDir};
+        AccelStepper stepperY{AccelStepper::DRIVER, yAxisStep, yAxisDir};
+        AccelStepper stepperZ{AccelStepper::DRIVER, zAxisStep, zAxisDir};
 
         MultiStepper steppers;
 
@@ -23,9 +30,9 @@ class StepperControl{
         const int yLimitSwitch = 16;
         const int zLimitSwitch = 17;
 
-        const float xStepstoMM = 
-        const float yStepstoMM = 
-        const float zStepstoMM = 
+        const float xStepstoMM = -36.f;
+        const float yStepstoMM = -36.f; 
+        const float zStepstoMM = 36.f;
 
         const float sleepPin = 15;
 };

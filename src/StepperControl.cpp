@@ -1,57 +1,72 @@
 #include "StepperControl.h"
 
-StepperControl::begin(){
+
+void StepperControl::begin(){
     pinMode(xLimitSwitch, INPUT_PULLUP);
     pinMode(yLimitSwitch, INPUT_PULLUP);
     pinMode(zLimitSwitch, INPUT_PULLUP);
 
-    stepperX.setMaxSpeed(2000);
-    stepperY.setMaxSpeed(2000);
-    stepperZ.setMaxSpeed(2000);
+    stepperX.setMaxSpeed(5000);
+    stepperY.setMaxSpeed(5000);
+    stepperZ.setMaxSpeed(5000);
 
     steppers.addStepper(stepperX);
     steppers.addStepper(stepperY);
     steppers.addStepper(stepperZ);
 
-    stepperX.setCurrentPosition(0);
-    stepperY.setCurrentPosition(0);
-    stepperZ.setCurrentPosition(0);
-
     pinMode(sleepPin, OUTPUT);
     digitalWrite(sleepPin, HIGH);
 }
 
-StepperControl::home(){
-    stepperX.setSpeed(-500);
-    while(digitalRead(xLimitSwitch))
-        stepperX.runSpeed();
-    stepperX.stop();
+void StepperControl::home(){
+
+    digitalWrite(xAxisDir, HIGH); 
+    while (!digitalRead(xLimitSwitch)) { 
+        digitalWrite(xAxisStep, HIGH);
+        delayMicroseconds(300); 
+        digitalWrite(xAxisStep, LOW); 
+        delayMicroseconds(300);
+    }
     stepperX.setCurrentPosition(0);
-
     delay(500);
 
-    stepperY.setSpeed(-500);
-    while(digitalRead(yLimitSwitch))
-        stepperY.runSpeed();
-    stepperY.stop();
+
+    digitalWrite(yAxisDir, HIGH); 
+    while (!digitalRead(yLimitSwitch)) { 
+        digitalWrite(yAxisStep, HIGH);
+        delayMicroseconds(300); 
+        digitalWrite(yAxisStep, LOW); 
+        delayMicroseconds(300);
+    }
     stepperY.setCurrentPosition(0);
-
     delay(500);
 
-    stepperZ.setSpeed(-500);
-    while(digitalRead(zLimitSwitch))
-        stepperZ.runSpeed();
-    stepperZ.stop();
+    digitalWrite(zAxisDir, LOW); 
+    while (!digitalRead(zLimitSwitch)) { 
+        digitalWrite(zAxisStep, HIGH);
+        delayMicroseconds(1001); 
+        digitalWrite(zAxisStep, LOW); 
+        delayMicroseconds(100);
+    }
     stepperZ.setCurrentPosition(0);
+    delay(500);
+
+    long positions[] = {20, 20, 20};
+    steppers.moveTo(positions);
 }
 
-StepperControl::move(float x, float y, float z){
-    
+void StepperControl::move(float x, float y, float z){
+
     long positions[3];
-    positions[0] = x * ; // X target step
-    positions[1] = y;  // Y target step
-    positions[2] = z;  // Z target step
+    positions[0] = x * xStepstoMM; // X target step
+    positions[1] = y * yStepstoMM;  // Y target step
+    positions[2] = z * zStepstoMM;  // Z target step
 
     steppers.moveTo(positions);
     steppers.runSpeedToPosition(); // Blocks until complete
+}
+
+void StepperControl::printAll(){
+    Serial.printf("X Limit: %d, Y Limit: %d, Z Limit: %d \n",
+        digitalRead(xLimitSwitch), digitalRead(yLimitSwitch), digitalRead(zLimitSwitch));
 }
