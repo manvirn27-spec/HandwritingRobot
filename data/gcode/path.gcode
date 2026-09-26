@@ -1,4 +1,3 @@
-G0 ;stop
 G1 X190.00 Y100.00 ;move to start
 G3 ;lower pen
 G1 X189.82 Y105.65 ;move

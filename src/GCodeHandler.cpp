@@ -24,22 +24,23 @@ GCodeHandler::Command GCodeHandler::getNextCommand() {
         for (char c : line) {
             gcode.AddCharToLine(c);
         }
+        gcode.AddCharToLine('\n'); 
         gcode.ParseLine(); 
 
         if (gcode.HasWord('G')) {
             int gVal = gcode.GetWordValue('G');
-            if (gVal == 0) return Command::stop;
-            if (gVal == 1) return Command::move;
+            if (gVal == 0 || gVal == 1) return Command::move;
             if (gVal == 2) return Command::liftPen;
             if (gVal == 3) return Command::lowerPen;
         } else if (gcode.HasWord('M')) {
             int mVal = gcode.GetWordValue('M');
-            if(mVal == 0) return Command::home;
-            if(mVal == 1) return Command::endPage;
+            if (mVal == 0) return Command::home;
+            if (mVal == 1) return Command::endPage;
         }
+        return Command::invalid; 
     }
 
-    return Command::invalid;
+    return Command::endPage;
 }
 
 std::array<float, 3> GCodeHandler::getNextPos() {
@@ -51,16 +52,14 @@ std::array<float, 3> GCodeHandler::getNextPos() {
 
     return pos;
 }
-
 void GCodeHandler::closeFile() {
     if (gcodeFile) {
         gcodeFile.close();
     }
 }
-
 void GCodeHandler::dryRun() {
     Serial.println("==========================================");
-    Serial.printf("STARTING DRY RUN FOR: %s\n", gcodeFile);
+    Serial.printf("STARTING DRY RUN \n"); 
     Serial.println("==========================================");
 
     int lineCount = 0;
@@ -104,7 +103,6 @@ void GCodeHandler::dryRun() {
     Serial.println("DRY RUN COMPLETE");
     Serial.println("==========================================");
 }
-
 void GCodeHandler::testFromInternalString() {
     Serial.println("==========================================");
     Serial.println("STARTING TEST FROM EMBEDDED G-CODE STRING");

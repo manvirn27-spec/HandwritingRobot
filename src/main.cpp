@@ -11,8 +11,8 @@ GCodeHandler parser;
 
 void setup() {
   Serial.begin(115200);
-  parser.testFromInternalString();
-
+  parser.begin("/gcode/path.gcode");
+  parser.dryRun();
 }
 void loop(){
 }
