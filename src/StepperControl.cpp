@@ -44,7 +44,7 @@ void StepperControl::home(){
     digitalWrite(zAxisDir, LOW); 
     while (!digitalRead(zLimitSwitch)) { 
         digitalWrite(zAxisStep, HIGH);
-        delayMicroseconds(1001); 
+        delayMicroseconds(100); 
         digitalWrite(zAxisStep, LOW); 
         delayMicroseconds(100);
     }
@@ -64,6 +64,11 @@ void StepperControl::move(float x, float y, float z){
 
     steppers.moveTo(positions);
     steppers.runSpeedToPosition(); // Blocks until complete
+}
+void StepperControl::stop(){
+    stepperX.stop();
+    stepperY.stop();
+    stepperZ.stop();
 }
 
 void StepperControl::printAll(){
