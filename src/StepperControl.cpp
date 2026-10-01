@@ -15,7 +15,7 @@ void StepperControl::begin(){
     steppers.addStepper(stepperZ);
 
     pinMode(sleepPin, OUTPUT);
-    digitalWrite(sleepPin, HIGH);
+    enable();
 }
 
 void StepperControl::home(){
@@ -53,6 +53,13 @@ void StepperControl::home(){
 
     long positions[] = {20, 20, 20};
     steppers.moveTo(positions);
+}
+
+void StepperControl::enable(){
+    digitalWrite(sleepPin, HIGH);
+}
+void StepperControl::disable(){
+    digitalWrite(sleepPin, LOW);
 }
 
 void StepperControl::move(float x, float y, float z){

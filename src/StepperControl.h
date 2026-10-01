@@ -9,6 +9,8 @@ class StepperControl{
     public:
         void begin();
         void home();
+        void enable();
+        void disable();
 
         void move(float x, float y, float z); //in mm. Blocking
         void stop();
