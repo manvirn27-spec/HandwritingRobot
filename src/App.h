@@ -12,7 +12,7 @@
 
 class App{
     public:
-        void begin();
+        void begin(const char* filePath);
         void execute();
     private:
         StepperControl steppers;

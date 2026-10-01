@@ -1,18 +1,12 @@
 #include <Arduino.h>
-#include <AccelStepper.h>
-#include <MultiStepper.h>
-#include "GCodeHandler.h"
-#include "StepperControl.h"
-#include "GcodeParser.h"
-#include "Buzzer.h"
+#include "App.h"
 
-StepperControl steppers;
-GCodeHandler parser;
+App app;
+
 
 void setup() {
-  Serial.begin(115200);
-  parser.begin("/gcode/path.gcode");
-  parser.dryRun();
+  app.begin("/gcode/path.gcode")
 }
 void loop(){
+  app.execute();
 }
