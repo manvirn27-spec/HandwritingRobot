@@ -13,7 +13,7 @@ class Buzzer{
         void playEnd();
 
     private:
-        const int buzzerPin = 1;
+        const int BUZZER_PIN = 23;
 };
 
 #endif

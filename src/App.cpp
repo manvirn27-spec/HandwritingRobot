@@ -5,8 +5,8 @@ void App::begin(const char* filePath){
     steppers.begin();
     steppers.home();
     parse.begin("filePath"); //change to whatever filepath for the one you want to print
-    //buz.begin();
-    //buz.playStartup();
+    buz.begin();
+    buz.playStartup();
 
     currentPos[0] = 0; currentPos[1] = 0; currentPos[2] = 0;
 }
@@ -38,7 +38,7 @@ void App::execute(){
         Serial.println("Page ended. Replace sheet and select next file.");
         steppers.move(0, 0, 100);
         steppers.disable();
-        //buz.playEnd();
+        buz.playEnd();
     }
     else{
         if(cmd == GCodeHandler::Command::invalid)
@@ -47,7 +47,7 @@ void App::execute(){
             Serial.println("Unkown error");
 
         for(int i = 0; i < 10; i++){
-            //buz.playError();
+            buz.playError();
             delay(5000);
         }
         while(1){}
