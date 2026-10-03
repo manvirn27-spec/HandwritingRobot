@@ -34,9 +34,9 @@ class StepperControl{
         const int yLimitSwitch = 16;
         const int zLimitSwitch = 17;
 
-        const float xStepstoMM = -36.f;
-        const float yStepstoMM = -36.f; 
-        const float zStepstoMM = 36.f;
+        const float xStepstoMM = -100.f; //-502.75
+        const float yStepstoMM = -100.f;  //-502.75
+        const float zStepstoMM = 200.f; //800
 
         const float sleepPin = 15;
 };

@@ -8,7 +8,7 @@ void StepperControl::begin(){
 
     stepperX.setMaxSpeed(5000);
     stepperY.setMaxSpeed(5000);
-    stepperZ.setMaxSpeed(5000);
+    stepperZ.setMaxSpeed(8000);
 
     steppers.addStepper(stepperX);
     steppers.addStepper(stepperY);
@@ -19,17 +19,19 @@ void StepperControl::begin(){
 }
 
 void StepperControl::home(){
-
-    digitalWrite(xAxisDir, HIGH); 
-    while (!digitalRead(xLimitSwitch)) { 
-        digitalWrite(xAxisStep, HIGH);
-        delayMicroseconds(300); 
-        digitalWrite(xAxisStep, LOW); 
-        delayMicroseconds(300);
+    digitalWrite(zAxisDir, LOW); 
+    while (!digitalRead(zLimitSwitch)) { 
+        digitalWrite(zAxisStep, HIGH);
+        delayMicroseconds(100); 
+        digitalWrite(zAxisStep, LOW); 
+        delayMicroseconds(100);
     }
+    stepperZ.setCurrentPosition(0);
+    //move pen up for homing
     stepperX.setCurrentPosition(0);
+    stepperY.setCurrentPosition(0);
+    move(0, 0, 30);
     delay(500);
-
 
     digitalWrite(yAxisDir, HIGH); 
     while (!digitalRead(yLimitSwitch)) { 
@@ -41,18 +43,15 @@ void StepperControl::home(){
     stepperY.setCurrentPosition(0);
     delay(500);
 
-    digitalWrite(zAxisDir, LOW); 
-    while (!digitalRead(zLimitSwitch)) { 
-        digitalWrite(zAxisStep, HIGH);
-        delayMicroseconds(100); 
-        digitalWrite(zAxisStep, LOW); 
-        delayMicroseconds(100);
+    digitalWrite(xAxisDir, HIGH); 
+    while (!digitalRead(xLimitSwitch)) { 
+        digitalWrite(xAxisStep, HIGH);
+        delayMicroseconds(300); 
+        digitalWrite(xAxisStep, LOW); 
+        delayMicroseconds(300);
     }
-    stepperZ.setCurrentPosition(0);
+    stepperX.setCurrentPosition(0);
     delay(500);
-
-    long positions[] = {20, 20, 20};
-    steppers.moveTo(positions);
 }
 
 void StepperControl::enable(){

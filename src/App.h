@@ -22,9 +22,7 @@ class App{
         std::array<float, 3> currentPos;
 
         const float liftPenHeight = 30;
-        const float lowerPenHeight = 5;
-        const float hardPressHeight = 0;
-        
+        const float lowerPenHeight = 0;        
 
 };
 

@@ -6,17 +6,8 @@ App app;
 Buzzer buz;
 
 void setup() {
-  //app.begin("/gcode/path.gcode");
-  buz.begin();
+  app.begin("/gcode/path.gcode");
 }
 void loop(){
-  //app.execute();
-  buz.playStartup();
-  delay(3000);
-  buz.playError();
-  delay(3000);
-  buz.playEnd();
-  delay(3000);
-  buz.playShutdown();
-  delay(5000);
+  app.execute();
 }

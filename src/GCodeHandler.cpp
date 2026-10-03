@@ -43,12 +43,11 @@ GCodeHandler::Command GCodeHandler::getNextCommand() {
     return Command::endPage;
 }
 
-std::array<float, 3> GCodeHandler::getNextPos() {
-    std::array<float, 3> pos = {0.0f, 0.0f, 0.0f};
+std::array<float, 2> GCodeHandler::getNextPos() {
+    std::array<float, 2> pos = {0.0f, 0.0f};
 
     if (gcode.HasWord('X')) pos[0] = gcode.GetWordValue('X');
     if (gcode.HasWord('Y')) pos[1] = gcode.GetWordValue('Y');
-    if (gcode.HasWord('Z')) pos[2] = gcode.GetWordValue('Z');
 
     return pos;
 }
@@ -71,7 +70,7 @@ void GCodeHandler::dryRun() {
 
         switch (cmd) {
             case Command::move: {
-                std::array<float, 3> pos = getNextPos();
+                std::array<float, 2> pos = getNextPos();
                 Serial.printf("ACTION: MOVE -> X: %.2f mm, Y: %.2f mm, Z: %.2f mm\n", pos[0], pos[1], pos[2]);
                 break;
             }
@@ -145,7 +144,7 @@ void GCodeHandler::testFromInternalString() {
 
         switch (cmd) {
             case Command::move: {
-                std::array<float, 3> pos = getNextPos();
+                std::array<float, 2> pos = getNextPos();
                 Serial.printf("ACTION: MOVE -> X: %.2f mm, Y: %.2f mm, Z: %.2f mm\n", pos[0], pos[1], pos[2]);
                 break;
             }

@@ -22,7 +22,7 @@ class GCodeHandler {
 
         bool begin(const char* filePath);
         Command getNextCommand();
-        std::array<float, 3> getNextPos();
+        std::array<float, 2> getNextPos();
 
         void closeFile();
 
