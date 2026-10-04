@@ -21,6 +21,12 @@ void App::execute(){
 
     if(cmd == GCodeHandler::Command::move){
         std::array<float, 2> pos = parse.getNextPos();
+        
+        //if(pos[0] > xMaxPos) pos[0] = xMaxPos;
+        //if(pos[0] < xMinPos) pos[0] = xMaxPos;
+        //if(pos[0] > yMaxPos) pos[0] = yMaxPos;
+        //if(pos[0] < yMinPos) pos[0] = yMaxPos;
+
         steppers.move(pos[0], pos[1], currentPos[2]);
 
         currentPos[0] = pos[0];
