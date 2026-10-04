@@ -40,7 +40,7 @@ void StepperControl::home(){
         digitalWrite(yAxisStep, LOW); 
         delayMicroseconds(300);
     }
-    stepperY.setCurrentPosition(-20 * yStepstoMM);
+    stepperY.setCurrentPosition(-22 * yStepstoMM);
     delay(500);
 
     digitalWrite(xAxisDir, HIGH); 
@@ -50,7 +50,7 @@ void StepperControl::home(){
         digitalWrite(xAxisStep, LOW); 
         delayMicroseconds(300);
     }
-    stepperX.setCurrentPosition(-30 * xStepstoMM);
+    stepperX.setCurrentPosition(-32 * xStepstoMM);
     delay(500);
 }
 
